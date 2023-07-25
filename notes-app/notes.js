@@ -4,7 +4,7 @@ const chalk = require('chalk')
 const addNote = (title, body) => {
     const notes = loadNotes()
     const duplicateNotes = notes.filter((note) => note.title === title)
-    console.log(duplicateNotes)
+
     if(duplicateNotes.length == 0){
         notes.push({
             title,
@@ -22,6 +22,7 @@ const addNote = (title, body) => {
 const removeNote = (title) => {
     const notes = loadNotes()
     const removeNotes = notes.filter((note) => note.title !== title)
+
     if(removeNotes.length === notes.length){
         console.log(chalk.red.inverse('Title doesnot exist!'))
     }
@@ -33,6 +34,7 @@ const removeNote = (title) => {
 
 const listNotes = () => {
     const notes = loadNotes()
+
     notes.forEach(note => {
         console.log(note.title)
     });
