@@ -5,6 +5,8 @@ const addNote = (title, body) => {
     const notes = loadNotes()
     const duplicateNotes = notes.filter((note) => note.title === title)
 
+    debugger
+
     if(duplicateNotes.length == 0){
         notes.push({
             title,
@@ -16,7 +18,6 @@ const addNote = (title, body) => {
     else{
         console.log(chalk.red.inverse(('Title already taken.')))
     }
-    
 }
 
 const removeNote = (title) => {
@@ -38,7 +39,6 @@ const listNotes = () => {
     notes.forEach(note => {
         console.log(note.title)
     });
-    
 }
 
 const readNote = (title) => {
