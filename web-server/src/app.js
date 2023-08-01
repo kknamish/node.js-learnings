@@ -6,12 +6,12 @@ const app = express()
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
-// const viewsPath = path.join(__dirname, '../templates')
+const viewsPath = path.join(__dirname, '../templates/views')
 
 // Setup handlebars engin and views location
 app.set('view engine', 'hbs')
 // By default, express searches for 'views' directory inorder to load dynamic templates using Handlebars, so to change it we can do the following
-// app.set('views', viewsPath)
+app.set('views', viewsPath)
 
 // Used incase to static pages
 app.use(express.static(publicDirectoryPath))
