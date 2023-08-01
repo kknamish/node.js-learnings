@@ -4,17 +4,22 @@ const hbs = require('hbs')
 
 const app = express()
 
+
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
+const parialsPath = path.join(__dirname, '../templates/partials')
+
 
 // Setup handlebars engin and views location
 app.set('view engine', 'hbs')
 // By default, express searches for 'views' directory inorder to load dynamic templates using Handlebars, so to change it we can do the following
 app.set('views', viewsPath)
+hbs.registerPartials(parialsPath)
 
 // Used incase to static pages
 app.use(express.static(publicDirectoryPath))
+
 
 app.get('', (req, res) => {
     const data = {
@@ -28,7 +33,7 @@ app.get('', (req, res) => {
 app.get('/about', (req, res) => {
     const data = {
         title: 'About page',
-        created_by: 'Namish'
+        username: 'Namish'
     }
     res.render('about', data)
 })
@@ -36,6 +41,8 @@ app.get('/about', (req, res) => {
 app.get('/help', (req, res) => {
     const data = {
         message: 'This is help message',
+        title: 'Help',
+        username: 'Namish'
     }
 
     res.render('help', data)
