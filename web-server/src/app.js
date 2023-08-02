@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const weather = require('./utils/weather')
 
 const app = express()
 
@@ -38,6 +39,15 @@ app.get('/about', (req, res) => {
     res.render('about', data)
 })
 
+app.get('/about/*', (req, res) => {
+    const data = {
+        title: '404',
+        username: 'Namish',
+        message: 'Article Not Found'
+    }
+    res.render('404', data)
+})
+
 app.get('/help', (req, res) => {
     const data = {
         message: 'This is help message',
@@ -48,11 +58,44 @@ app.get('/help', (req, res) => {
     res.render('help', data)
 })
 
+app.get('/help/*', (req, res) => {
+    const data = {
+        title: '404',
+        username: 'Namish',
+        message: 'Article Not Found'
+    }
+    res.render('404', data)
+})
+
 app.get('/weather', (req, res) => {
-    res.send({
-        forecast: "It is raining.",
-        location: "Hyderabad"
+  if (!req.query.address) {
+    return res.send({
+      error: 'Address is not mentioned.',
+    });
+  }
+
+  weather.forecast(req.query.address)
+    .then(description => {
+      res.send({
+        forecast: description,
+        location: 'Hyderabad',
+        address: req.query.address,
+      });
     })
+    .catch(error => {
+    //   console.error('Error fetching weather data:', error);
+      res.status(500).send('Error fetching weather data');
+    });
+});
+
+
+app.get('*', (req, res) => {
+    const data = {
+        title: '404',
+        username: 'Namish',
+        message: 'Page Not Found'
+    }
+    res.render('404', data)
 })
 
 app.listen(3000, ()=>{
